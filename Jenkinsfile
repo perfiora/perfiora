@@ -27,13 +27,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn -B -U clean install'
+                sh 'mvn -B -U clean'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'mvn -Pnative test'
             }
             post {
                 always {
