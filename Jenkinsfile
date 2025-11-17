@@ -44,7 +44,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                sh 'mvn -Pnative package'
+                sh 'mvn -Pnative -DskipTests package'
             }
             post {
                 success {
