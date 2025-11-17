@@ -44,11 +44,11 @@ pipeline {
 
         stage('Package') {
             steps {
-                sh 'mvn -B package'
+                sh 'mvn -Pnative package'
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                    archiveArtifacts artifacts: 'target/perfiora', fingerprint: true
                 }
             }
         }
