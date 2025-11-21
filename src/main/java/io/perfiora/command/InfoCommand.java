@@ -6,8 +6,11 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class InfoCommand implements PerfioraCommand {
+
+    private static final Logger log = Logger.getLogger(InfoCommand.class.getName());
 
     private final String unifiedResourceLocator;
 
@@ -28,14 +31,13 @@ public class InfoCommand implements PerfioraCommand {
             DatabaseMetaData metaData = connection.getMetaData();
             String databaseProductVersion = metaData.getDatabaseProductVersion();
             String databaseProductName = metaData.getDatabaseProductName();
-            System.out.println("Name: " + databaseProductName);
-            System.out.println("Version: " + databaseProductVersion);
+            log.info("Name: " + databaseProductName);
+            log.info("Version: " + databaseProductVersion);
             connection.close();
         } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            log.warning("SQLException: " + ex.getMessage());
+            log.warning("SQLState: " + ex.getSQLState());
+            log.warning("VendorError: " + ex.getErrorCode());
         }
     }
 }
