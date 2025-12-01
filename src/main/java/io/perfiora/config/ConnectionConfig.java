@@ -79,14 +79,14 @@ public class ConnectionConfig {
 
     /**
      * Parse connection string using next pattern:
-     * jdbc:mysql://user:pass@host/database
+     * jdbc:<protocol>://user:pass@host:port/database
      *
      * @param connectionString String
      * @return ConnectionConfig
      */
     public static ConnectionConfig fromConnectionString(String connectionString) {
         Pattern pattern = Pattern.compile(
-                "^jdbc:mysql://(?:(?<user>[^:]+)(?::(?<pass>[^@]+))?@)?(?<host>[^:/]+)(?::(?<port>\\d+))?/(?<db>[^?]+)"
+                "^jdbc:(?<protocol>[^:]+)://(?:(?<user>[^:]+)(?::(?<pass>[^@]+))?@)?(?<host>[^:/]+)(?::(?<port>\\d+))?/(?<db>[^?]+)"
         );
 
         Matcher m = pattern.matcher(connectionString);
@@ -94,13 +94,35 @@ public class ConnectionConfig {
         ConnectionConfig connectionConfig = new ConnectionConfig();
 
         if (m.matches()) {
+            String protocol = m.group("protocol");
+            connectionConfig.setProtocol(protocol);
             connectionConfig.setUser(m.group("user"));
             connectionConfig.setPassword(m.group("pass"));
             connectionConfig.setHost(m.group("host"));
-            connectionConfig.setPort(Integer.parseInt(m.group("port")));
+            String portStr = m.group("port");
+            connectionConfig.setPort(portStr != null 
+                    ? Integer.parseInt(portStr) 
+                    : getDefaultPort(protocol));
             connectionConfig.setDatabase(m.group("db"));
         }
 
         return connectionConfig;
+    }
+
+    /**
+     * Get the default port for the given JDBC protocol.
+     *
+     * @param protocol The JDBC protocol (e.g., "mysql", "postgresql")
+     * @return The default port for the protocol, or MySQL default port if unknown
+     */
+    private static int getDefaultPort(String protocol) {
+        switch (protocol.toLowerCase()) {
+            case JdbcProtocols.MYSQL:
+                return JdbcProtocols.MYSQL_DEFAULT_PORT;
+            case JdbcProtocols.POSTGRESQL:
+                return JdbcProtocols.POSTGRESQL_DEFAULT_PORT;
+            default:
+                throw new IllegalArgumentException("Invalid protocol: " + protocol);
+        }
     }
 }
