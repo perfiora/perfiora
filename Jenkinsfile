@@ -19,6 +19,7 @@ pipeline {
 
         stage('Verify Environment') {
             steps {
+                sh 'git --version'
                 sh 'java -version'
                 sh 'mvn -version'
                 sh 'native-image --version || echo "Native image not installed"'
