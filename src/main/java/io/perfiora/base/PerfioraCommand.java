@@ -2,8 +2,8 @@ package io.perfiora.base;
 
 public interface PerfioraCommand {
 
-    public String getName();
+    String getName();
 
-    public void execute();
+    void execute();
 
 }
