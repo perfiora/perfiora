@@ -25,15 +25,12 @@ public class InfoCommand implements PerfioraCommand {
 
     @Override
     public void execute() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(unifiedResourceLocator);
+        try (Connection connection = DriverManager.getConnection(unifiedResourceLocator)) {
             DatabaseMetaData metaData = connection.getMetaData();
             String databaseProductVersion = metaData.getDatabaseProductVersion();
             String databaseProductName = metaData.getDatabaseProductName();
             log.info("Name: " + databaseProductName);
             log.info("Version: " + databaseProductVersion);
-            connection.close();
         } catch (SQLException ex) {
             log.warning("SQLException: " + ex.getMessage());
             log.warning("SQLState: " + ex.getSQLState());
