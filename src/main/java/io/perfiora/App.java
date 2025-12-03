@@ -2,6 +2,7 @@ package io.perfiora;
 
 import io.perfiora.base.PerfioraCommand;
 import io.perfiora.command.InfoCommand;
+import io.perfiora.util.Version;
 
 import java.util.logging.*;
 
@@ -42,16 +43,33 @@ public class App {
 
     public static void main(String[] args) {
         configureLogging();
-        log.info("Perfiora");
+        
+        // Handle version flag
+        if (args.length > 0 && (args[0].equals("--version") || args[0].equals("-v"))) {
+            System.out.println("Perfiora " + Version.getVersion());
+            return;
+        }
+        
+        log.info("Perfiora " + Version.getVersion());
         if (args.length == 0) {
             log.info("Usage: perfiora <command> <args>");
+            log.info("       perfiora --version");
         } else {
             log.info("Command: " + args[0]);
 
             PerfioraCommand command = null;
             if (args[0].equals("info")) {
+                if (args.length < 2) {
+                    log.warning("Error: info command requires a connection string");
+                    log.info("Usage: perfiora info <jdbc-connection-string>");
+                    return;
+                }
                 command = new InfoCommand(args[1]);
                 command.execute();
+            } else {
+                log.warning("Unknown command: " + args[0]);
+                log.info("Usage: perfiora <command> <args>");
+                log.info("Available commands: info");
             }
         }
     }

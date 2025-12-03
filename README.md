@@ -21,7 +21,7 @@ Perfiora is a CLI tool for database introspection and analysis. Connect to your 
 
 ### Get Database Information
 
-Use the `info` command to retrieve database product name and version:
+Use the `info` command to retrieve comprehensive information about both the DBMS (Database Management System) and the connected database:
 
 **MySQL Example:**
 ```shell
@@ -49,6 +49,18 @@ jdbc:<protocol>://[user[:password]@]host[:port]/database
 ```
 2025-12-03 11:36:42 [INFO] io.perfiora.App - Perfiora
 2025-12-03 11:36:42 [INFO] io.perfiora.App - Command: info
-2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Name: MySQL
-2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Version: 8.4.7
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - === DBMS Information ===
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Product Name: MySQL
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Product Version: 8.4.7
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Driver Name: MySQL Connector/J
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Driver Version: 9.5.0
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - === Database Information ===
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Database: mydatabase
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - Schema: mydatabase
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - User: user@localhost
+2025-12-03 11:36:42 [INFO] io.perfiora.command.InfoCommand - URL: jdbc:mysql://localhost:3306/mydatabase
 ```
+
+The `info` command provides:
+- **DBMS Information**: Product name, version, JDBC driver details
+- **Database Information**: Database name, schema, connected user, connection URL
