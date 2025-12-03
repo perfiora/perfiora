@@ -46,11 +46,11 @@ public class App {
         
         // Handle version flag
         if (args.length > 0 && (args[0].equals("--version") || args[0].equals("-v"))) {
-            System.out.println("Perfiora " + Version.getVersion());
+            System.out.println("Perfiora V" + Version.getVersion());
             return;
         }
         
-        log.info("Perfiora " + Version.getVersion());
+        log.info("Perfiora V" + Version.getVersion());
         if (args.length == 0) {
             log.info("Usage: perfiora <command> <args>");
             log.info("       perfiora --version");
