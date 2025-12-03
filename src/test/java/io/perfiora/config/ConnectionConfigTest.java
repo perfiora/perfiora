@@ -14,11 +14,11 @@ public class ConnectionConfigTest {
     public void testFromConnectionString() {
         ConnectionConfig connectionConfig = ConnectionConfig.fromConnectionString(CONNECTION_STRING_WITH_CREDENTIALS);
 
-        assertEquals(JdbcProtocols.MYSQL, connectionConfig.getProtocol());
+        assertEquals(JdbcProtocols.MYSQL.getProtocol(), connectionConfig.getProtocol());
         assertEquals("user",  connectionConfig.getUser());
         assertEquals("pass", connectionConfig.getPassword());
         assertEquals("localhost", connectionConfig.getHost());
-        assertEquals(JdbcProtocols.MYSQL_DEFAULT_PORT, connectionConfig.getPort());
+        assertEquals(JdbcProtocols.MYSQL.getDefaultPort(), connectionConfig.getPort());
         assertEquals("test", connectionConfig.getDatabase());
     }
 
@@ -27,11 +27,11 @@ public class ConnectionConfigTest {
         String connectionString = "jdbc:mysql://user:pass@localhost/test";
         ConnectionConfig connectionConfig = ConnectionConfig.fromConnectionString(connectionString);
 
-        assertEquals(JdbcProtocols.MYSQL, connectionConfig.getProtocol());
+        assertEquals(JdbcProtocols.MYSQL.getProtocol(), connectionConfig.getProtocol());
         assertEquals("user", connectionConfig.getUser());
         assertEquals("pass", connectionConfig.getPassword());
         assertEquals("localhost", connectionConfig.getHost());
-        assertEquals(JdbcProtocols.MYSQL_DEFAULT_PORT, connectionConfig.getPort()); // Default port
+        assertEquals(JdbcProtocols.MYSQL.getDefaultPort(), connectionConfig.getPort()); // Default port
         assertEquals("test", connectionConfig.getDatabase());
     }
 
@@ -40,11 +40,11 @@ public class ConnectionConfigTest {
         String connectionString = "jdbc:postgresql://user:pass@localhost:5432/testdb";
         ConnectionConfig connectionConfig = ConnectionConfig.fromConnectionString(connectionString);
 
-        assertEquals(JdbcProtocols.POSTGRESQL, connectionConfig.getProtocol());
+        assertEquals(JdbcProtocols.POSTGRESQL.getProtocol(), connectionConfig.getProtocol());
         assertEquals("user", connectionConfig.getUser());
         assertEquals("pass", connectionConfig.getPassword());
         assertEquals("localhost", connectionConfig.getHost());
-        assertEquals(JdbcProtocols.POSTGRESQL_DEFAULT_PORT, connectionConfig.getPort());
+        assertEquals(JdbcProtocols.POSTGRESQL.getDefaultPort(), connectionConfig.getPort());
         assertEquals("testdb", connectionConfig.getDatabase());
     }
 
@@ -53,11 +53,11 @@ public class ConnectionConfigTest {
         String connectionString = "jdbc:postgresql://user:pass@localhost/testdb";
         ConnectionConfig connectionConfig = ConnectionConfig.fromConnectionString(connectionString);
 
-        assertEquals(JdbcProtocols.POSTGRESQL, connectionConfig.getProtocol());
+        assertEquals(JdbcProtocols.POSTGRESQL.getProtocol(), connectionConfig.getProtocol());
         assertEquals("user", connectionConfig.getUser());
         assertEquals("pass", connectionConfig.getPassword());
         assertEquals("localhost", connectionConfig.getHost());
-        assertEquals(JdbcProtocols.POSTGRESQL_DEFAULT_PORT, connectionConfig.getPort()); // Default port
+        assertEquals(JdbcProtocols.POSTGRESQL.getDefaultPort(), connectionConfig.getPort()); // Default port
         assertEquals("testdb", connectionConfig.getDatabase());
     }
 }

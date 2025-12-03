@@ -113,16 +113,10 @@ public class ConnectionConfig {
      * Get the default port for the given JDBC protocol.
      *
      * @param protocol The JDBC protocol (e.g., "mysql", "postgresql")
-     * @return The default port for the protocol, or MySQL default port if unknown
+     * @return The default port for the protocol
+     * @throws IllegalArgumentException if the protocol is not recognized
      */
     private static int getDefaultPort(String protocol) {
-        switch (protocol.toLowerCase()) {
-            case JdbcProtocols.MYSQL:
-                return JdbcProtocols.MYSQL_DEFAULT_PORT;
-            case JdbcProtocols.POSTGRESQL:
-                return JdbcProtocols.POSTGRESQL_DEFAULT_PORT;
-            default:
-                throw new IllegalArgumentException("Invalid protocol: " + protocol);
-        }
+        return JdbcProtocols.fromProtocol(protocol).getDefaultPort();
     }
 }

@@ -1,35 +1,63 @@
 package io.perfiora.config;
 
 /**
- * JDBC protocol constants for various database vendors.
+ * JDBC protocol enum for various database vendors.
  */
-public final class JdbcProtocols {
-
+public enum JdbcProtocols {
     /**
      * MySQL JDBC protocol.
      */
-    public static final String MYSQL = "mysql";
+    MYSQL("mysql", 3306),
 
     /**
      * PostgreSQL JDBC protocol.
      */
-    public static final String POSTGRESQL = "postgresql";
+    POSTGRESQL("postgresql", 5432);
+
+    private final String protocol;
+    private final int defaultPort;
+
+    JdbcProtocols(String protocol, int defaultPort) {
+        this.protocol = protocol;
+        this.defaultPort = defaultPort;
+    }
 
     /**
-     * Default port for MySQL.
+     * Get the protocol string value.
+     *
+     * @return The protocol string (e.g., "mysql", "postgresql")
      */
-    public static final int MYSQL_DEFAULT_PORT = 3306;
+    public String getProtocol() {
+        return protocol;
+    }
 
     /**
-     * Default port for PostgreSQL.
+     * Get the default port for this protocol.
+     *
+     * @return The default port number
      */
-    public static final int POSTGRESQL_DEFAULT_PORT = 5432;
+    public int getDefaultPort() {
+        return defaultPort;
+    }
 
     /**
-     * Private constructor to prevent instantiation.
+     * Find a JDBC protocol enum by its protocol string value.
+     *
+     * @param protocol The protocol string (case-insensitive)
+     * @return The matching JdbcProtocols enum
+     * @throws IllegalArgumentException if the protocol is not recognized
      */
-    private JdbcProtocols() {
-        throw new AssertionError("Cannot instantiate constants class");
+    public static JdbcProtocols fromProtocol(String protocol) {
+        if (protocol == null) {
+            throw new IllegalArgumentException("Protocol cannot be null");
+        }
+        String lowerProtocol = protocol.toLowerCase();
+        for (JdbcProtocols jdbcProtocol : values()) {
+            if (jdbcProtocol.protocol.equals(lowerProtocol)) {
+                return jdbcProtocol;
+            }
+        }
+        throw new IllegalArgumentException("Invalid protocol: " + protocol);
     }
 }
 
