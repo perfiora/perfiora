@@ -1,6 +1,7 @@
 package io.perfiora;
 
 import io.perfiora.base.PerfioraCommand;
+import io.perfiora.command.DiffCommand;
 import io.perfiora.command.InfoCommand;
 import io.perfiora.util.Version;
 
@@ -65,6 +66,14 @@ public class App {
                     return;
                 }
                 command = new InfoCommand(args[1]);
+                command.execute();
+            } else if (args[0].equals("diff")) {
+                if (args.length < 3) {
+                    log.warning("Error: diff command requires a connection string");
+                    log.info("Usage: perfiora diff <source-jdbc-connection-string> <target-jdbc-connection-string>");
+                    return;
+                }
+                command = new DiffCommand(args[1], args[2]);
                 command.execute();
             } else {
                 log.warning("Unknown command: " + args[0]);
